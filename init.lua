@@ -1,16 +1,14 @@
-hs.hotkey.bind({'cmd', 'alt'}, 'q', function() hs.application.launchOrFocus('QQ') end)
-hs.hotkey.bind({'cmd', 'alt'}, 'w', function() hs.application.launchOrFocus('WeChat') end)
-hs.hotkey.bind({'cmd', 'alt'}, 'm', function() hs.application.launchOrFocus('QQMusic') end)
-
-hs.hotkey.bind({'alt'}, 'q', function() hs.application.launchOrFocus('Skitch') end)
+hs.hotkey.bind({'alt'}, 'x', function() hs.application.launchOrFocus('WeChat') end)
 hs.hotkey.bind({'alt'}, 'i', function() hs.application.launchOrFocus('iTerm') end)
 hs.hotkey.bind({'alt'}, 'f', function() hs.application.launchOrFocus('Finder') end)
-hs.hotkey.bind({'alt'}, 'w', function() hs.application.launchOrFocus('Webstorm') end)
+hs.hotkey.bind({'alt'}, 'w', function() hs.application.launchOrFocus('WebStorm') end)
 hs.hotkey.bind({'alt'}, 'e', function() hs.application.launchOrFocus('Evernote') end)
 hs.hotkey.bind({'alt'}, 'd', function() hs.application.launchOrFocus('钉钉') end)
 hs.hotkey.bind({'alt'}, 'c', function() hs.application.launchOrFocus('Google Chrome') end)
-
--- -----------------------------------------------------------------------
+hs.hotkey.bind({'alt'}, 'o', function() hs.application.launchOrFocus('Xcode') end)
+hs.hotkey.bind({'alt'}, 's', function() hs.application.launchOrFocus('Simulator') end)
+hs.hotkey.bind({'alt'}, 't', function() hs.application.launchOrFocus('SourceTree') end)
+-- -----------------------------------------------------------------------ß
 --           ** HammerSpoon Config File by S1ngS1ng with ❤️ **           --
 -- -----------------------------------------------------------------------
 
@@ -104,6 +102,46 @@ local function rightHalf()
   grid.set(this.window, cell, this.screen)
 end
 
+local function rightToLeft()
+  local this = current:new()
+  local cell = Cell(this.windowGrid.x, this.windowGrid.y, this.windowGrid.w - 1, this.windowGrid.h)
+  if this.windowGrid.w > 1 then
+    grid.set(this.window, cell, this.screen)
+  else
+    hs.alert.show("Small Enough :)")
+  end
+end
+
+local function rightToRight()
+  local this = current:new()
+  local cell = Cell(this.windowGrid.x, this.windowGrid.y, this.windowGrid.w + 1, this.windowGrid.h)
+  if this.windowGrid.w < this.screenGrid.w - this.windowGrid.x then
+    grid.set(this.window, cell, this.screen)
+  else
+    hs.alert.show("Touching Right Edge :|")
+  end
+end
+
+local function leftToLeft()
+  local this = current:new()
+  local cell = Cell(this.windowGrid.x - 1, this.windowGrid.y, this.windowGrid.w + 1, this.windowGrid.h)
+  if this.windowGrid.x > 0 then
+    grid.set(this.window, cell, this.screen)
+  else
+    hs.alert.show("Touching Left Edge :|")
+  end
+end
+
+local function leftToRight()
+  local this = current:new()
+  local cell = Cell(this.windowGrid.x + 1, this.windowGrid.y, this.windowGrid.w - 1, this.windowGrid.h)
+  if this.windowGrid.w > 1 then
+    grid.set(this.window, cell, this.screen)
+  else
+    hs.alert.show("Small Enough :)")
+  end
+end
+
 -- -----------------------------------------------------------------------
 --                           ** Key Binding **                          --
 -- -----------------------------------------------------------------------
@@ -115,6 +153,9 @@ hs.hotkey.bind({"ctrl", "alt"}, "right", throwRight)
 hs.hotkey.bind({"ctrl", "alt", "cmd" }, "m", maximizeWindow)    -- ⌃⌥⌘ + M
 hs.hotkey.bind({"ctrl", "alt", "cmd"}, "left", leftHalf)        -- ⌃⌥⌘ + ←
 hs.hotkey.bind({"ctrl", "alt", "cmd"}, "right", rightHalf)      -- ⌃⌥⌘ + →
+
+hs.hotkey.bind({"alt", "cmd", "shift"}, "right", rightToRight) -- ⌥⌘⇧ + →
+hs.hotkey.bind({"alt", "cmd", "shift"}, "left", leftToLeft)     -- ⌥⌘⇧ + ←
 
 function reloadConfig(files)
   local doReload = false
